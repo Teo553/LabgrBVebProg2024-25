@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface ArtistService {
     List<Artist> listArtist();
-    Artist findById(String id);
+    Artist findById(Long id);
 }

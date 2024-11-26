@@ -13,7 +13,7 @@ public class ArtistRepository {
         return DataHolder.performers;
     }
 
-    public Optional<Artist> findById(String id){
+    public Optional<Artist> findById(Long id){
         return DataHolder.performers.stream().filter(artist -> artist.getId().equals(id)).findFirst();
     }
 

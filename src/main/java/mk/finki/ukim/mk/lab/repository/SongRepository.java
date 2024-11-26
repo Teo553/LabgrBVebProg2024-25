@@ -6,6 +6,7 @@ import mk.finki.ukim.mk.lab.model.Song;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class SongRepository {
@@ -18,5 +19,9 @@ public class SongRepository {
 
     public Artist addArtistToSong(Artist artist, Song song){
         return DataHolder.songs.stream().filter(s -> s.equals(song)).findFirst().get().addPerformer(artist);
+    }
+
+    public List<Song> searchByStr(String name){
+        return DataHolder.songs.stream().filter(c -> c.getTitle().toLowerCase().contains(name.toLowerCase())).collect(Collectors.toList());
     }
 }

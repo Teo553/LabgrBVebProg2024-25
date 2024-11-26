@@ -25,8 +25,6 @@ public class SongListServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String trackId=req.getParameter("name");
-        resp.sendRedirect("/artist");
     }
 
     @Override
@@ -36,7 +34,15 @@ public class SongListServlet extends HttpServlet {
                 .buildExchange(req, resp);
 
         WebContext context = new WebContext(webExchange);
-        context.setVariable("songsList",songService.listSongs());
+        String search = req.getParameter("search");
+
+        if (search == null || search.isEmpty()) {
+            context.setVariable("songsList", songService.listSongs());
+        } else {
+            context.setVariable("songsList", songService.searchByStr(search));
+        }
+
         templateEngine.process("listSongs.html", context, resp.getWriter());
     }
+
 }

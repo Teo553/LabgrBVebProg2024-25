@@ -4,12 +4,12 @@ import lombok.Data;
 
 @Data
 public class Artist {
-    private String id;
+    private Long id;
     private String firstName;
     private String lastName;
     private String bio;
 
-    public Artist(String id, String firstName, String lastName, String bio) {
+    public Artist(Long id, String firstName, String lastName, String bio) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;

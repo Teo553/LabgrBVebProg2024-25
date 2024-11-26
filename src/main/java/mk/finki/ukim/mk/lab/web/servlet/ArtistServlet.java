@@ -44,7 +44,7 @@ public class ArtistServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String trackId = req.getParameter("trackId");
-        String artistId= req.getParameter("artistId");
+        Long artistId=Long.parseLong(req.getParameter("artistId")) ;
         Artist artist=this.artistService.findById(artistId);
         Song song=this.songService.findByTrackId(trackId);
         this.songService.addArtistToSong(artist,song);

@@ -18,8 +18,15 @@
     <!-- Display radio buttons for each song,
             the value should be the trackId
             and the displayed text should be Title: <songTitle>, Genre:<genre>, Release Year: <releaseYear> -->
+    <form th:method="GET" th:action="@{/listSongs}">
+        <label>Search</label>
+        <input type="text" name="search" id="search-input">
+        <input type="submit" value="Search">
+    </form>
+
 
     <form th:method="GET" th:action="@{/artist}">
+
         <div th:each="song : ${songsList}">
             <input type="radio" name="trackId" th:value="${song.getTrackId()}">
             <span th:text="${song.getTitle()} + ' - Genre: ' + ${song.getGenre()} + ' - Release Year: ' + ${song.getReleaseYear()}"></span>
