@@ -15,28 +15,25 @@
 </header>
 <main>
     <h2>Choose a song:</h2>
-    <!-- Display radio buttons for each song,
-            the value should be the trackId
-            and the displayed text should be Title: <songTitle>, Genre:<genre>, Release Year: <releaseYear> -->
-    <form th:method="GET" th:action="@{/listSongs}">
+    <form th:action="@{/songs}" method="GET">
         <label>Search</label>
-        <input type="text" name="search" id="search-input">
+        <input type="text" name="search" id="search">
         <input type="submit" value="Search">
     </form>
 
 
-    <form th:method="GET" th:action="@{/artist}">
-
+    <form th:action="@{/songs/artists}" th:method="GET">
         <div th:each="song : ${songsList}">
             <input type="radio" name="trackId" th:value="${song.getTrackId()}">
-            <span th:text="${song.getTitle()} + ' - Genre: ' + ${song.getGenre()} + ' - Release Year: ' + ${song.getReleaseYear()}"></span>
+            <span th:text="${song.getTitle()} + ' - Genre: ' + ${song.getGenre()} + ' - Release Year: ' + ${song.getReleaseYear()} + '- Album: '+${song.getAlbum().getName()}"></span>
+            <a th:href="@{'songs/delete/{id}'(id=${song.getId()})}">Delete</a>
+            <a th:href="@{'/songs/edit/{id}' (id=${song.getId()})}"><i>Edit</i></a>
         </div>
-
-        <button type='submit' value='Submit'>Submit</button>
+        <button type="submit">Submit Selected Song</button>
+        <a th:href="@{/songs/add-form}">
+            <h3>Add Song</h3>
+        </a>
     </form>
-    <!--<input type="radio" name="trackId" value="1"> Song 1 <br/>
-    <input type="radio" name="trackId" value="2"> Song 2<br/>
-    <input type="radio" name="trackId" value="3"> Song 3 <br/>-->
 </main>
 </body>
 </html>
