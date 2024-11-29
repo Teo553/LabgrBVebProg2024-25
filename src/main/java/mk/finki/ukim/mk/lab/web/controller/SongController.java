@@ -2,6 +2,7 @@ package mk.finki.ukim.mk.lab.web.controller;
 
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import mk.finki.ukim.mk.lab.model.Album;
 import mk.finki.ukim.mk.lab.model.Artist;
 import mk.finki.ukim.mk.lab.model.Song;
@@ -47,8 +48,19 @@ public class SongController {
     }
 
     @GetMapping("/{trackId}")
-    public String getSongDetails(@PathVariable String trackId, Model model) {
+    public String getSongDetails(@PathVariable String trackId, HttpServletRequest request,Model model) {
         Song song = songService.findByTrackId(trackId);
+        if(song==null){
+            return "redirect:/songs?error=SongNotFound";
+        }
+        HttpSession session=request.getSession();
+        Integer visitCount=(Integer)session.getAttribute("songVisitCount_"+trackId);
+        if(visitCount==null){
+            visitCount=0;
+        }
+        visitCount++;
+        session.setAttribute("songVisitCount_"+trackId,visitCount);
+        model.addAttribute("visitCount",visitCount);
         model.addAttribute("song", song);
         return "songDetails";
     }

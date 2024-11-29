@@ -15,6 +15,9 @@
         <li th:each="performer : ${song.getPerformers()}" th:text="${performer.getFirstName()} + ' ' + ${performer.getLastName()}"></li>
     </ul>
 </section>
+<section>
+    <h3>Number of visits: <span th:text="${visitCount}"></span></h3>
+</section>
 <a  href="/songs">Home</a>
 </body>
 </html>
