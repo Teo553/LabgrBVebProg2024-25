@@ -1,15 +1,21 @@
 package mk.finki.ukim.mk.lab.service.impl;
 
 import mk.finki.ukim.mk.lab.model.Album;
-import mk.finki.ukim.mk.lab.repository.AlbumRepository;
+import mk.finki.ukim.mk.lab.repository.jpa.AlbumRepository;
 import mk.finki.ukim.mk.lab.service.AlbumService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AlbumServiceImpl implements AlbumService {
-    AlbumRepository albumRepository = new AlbumRepository();
+    private final AlbumRepository albumRepository;
+
+    public AlbumServiceImpl(AlbumRepository albumRepository) {
+        this.albumRepository = albumRepository;
+    }
+
 
     @Override
     public List<Album> findAll() {
@@ -17,7 +23,7 @@ public class AlbumServiceImpl implements AlbumService {
     }
 
     @Override
-    public Album findById(Long id) {
+    public Optional<Album> findById(Long id) {
         return this.albumRepository.findById(id);
     }
 }

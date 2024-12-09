@@ -104,12 +104,13 @@ public class SongController {
     public String addSong(@RequestParam String trackId, @RequestParam Long id, @RequestParam String title,
                           @RequestParam String genre, @RequestParam int releaseYear, @RequestParam Long albumId) {
         Song song;
+        Album album=albumService.findById(albumId).orElse(null);
         if (this.songService.searchById(id) != null) {
             song = this.songService.searchById(id);
-            this.songService.saveOrUpdateSong(trackId, title, genre, releaseYear, song.getPerformers(), id, albumService.findById(albumId));
+            this.songService.saveOrUpdateSong(trackId, title, genre, releaseYear, song.getPerformers(),id,album);
         } else {
             song = new Song(trackId, title, genre, releaseYear);
-            this.songService.saveOrUpdateSong(trackId, title, genre, releaseYear, song.getPerformers(), id, albumService.findById(albumId));
+            this.songService.saveOrUpdateSong(trackId, title, genre, releaseYear, song.getPerformers(),id,album);
         }
         return "redirect:/songs";
     }

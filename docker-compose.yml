@@ -1,0 +1,12 @@
+version: "3"
+services:
+  labdb:
+    image: "postgres"
+    container_name: "labgrb"
+    environment:
+      - POSTGRES_USER=teo
+      - POSTGRES_PASSWORD=teo123
+      - POSTGRES_DB=music
+
+    ports:
+      - "5432:5432"
