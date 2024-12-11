@@ -8,6 +8,7 @@ import mk.finki.ukim.mk.lab.model.Artist;
 import mk.finki.ukim.mk.lab.model.Song;
 import mk.finki.ukim.mk.lab.service.AlbumService;
 import mk.finki.ukim.mk.lab.service.ArtistService;
+import mk.finki.ukim.mk.lab.service.CommentsService;
 import mk.finki.ukim.mk.lab.service.SongService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,15 +21,17 @@ import java.util.List;
 @RequestMapping("/songs")
 public class SongController {
 
-    public SongController(SongService songService, ArtistService artistService, AlbumService albumService) {
+    public SongController(SongService songService, ArtistService artistService, AlbumService albumService, CommentsService commentsService) {
         this.songService = songService;
         this.artistService = artistService;
         this.albumService = albumService;
+        this.commentsService = commentsService;
     }
 
     private final SongService songService;
     private final ArtistService artistService;
     private final AlbumService albumService;
+    private final CommentsService commentsService;
 
     @GetMapping
     public String getSongsPage(@RequestParam(required = false) String search, Model model) {
@@ -62,6 +65,8 @@ public class SongController {
         session.setAttribute("songVisitCount_"+trackId,visitCount);
         model.addAttribute("visitCount",visitCount);
         model.addAttribute("song", song);
+        model.addAttribute("comments",commentsService.findCommentsForPerson(trackId));
+        model.addAttribute("trackid",trackId);
         return "songDetails";
     }
 
@@ -112,6 +117,12 @@ public class SongController {
             song = new Song(trackId, title, genre, releaseYear);
             this.songService.saveOrUpdateSong(trackId, title, genre, releaseYear, song.getPerformers(),id,album);
         }
+        return "redirect:/songs";
+    }
+
+    @PostMapping("/addComment")
+    public String addComment(@RequestParam String trackid,@RequestParam String commentar){
+        commentsService.addCommentToSong(commentar,trackid);
         return "redirect:/songs";
     }
 
