@@ -15,18 +15,6 @@
         <li th:each="performer : ${song.getPerformers()}" th:text="${performer.getFirstName()} + ' ' + ${performer.getLastName()}"></li>
     </ul>
 </section>
-<!--<h2>Comments</h2>-->
-<!--<div th:each="c : ${comments}">-->
-<!--    <div>-->
-<!--        <span th:text="c"></span>-->
-<!--    </div>-->
-<!--</div>-->
-
-<!--<form method="POST" th:action="${'/songs/addComment'}">-->
-<!--    <input type="hidden" th:value="${trackId}" name="trackid">-->
-<!--    <input th:type="text" name="commentar">-->
-<!--    <button>Add new comment</button>-->
-<!--</form>-->
 <section>
     <h3>Number of visits: <span th:text="${visitCount}"></span></h3>
 </section>

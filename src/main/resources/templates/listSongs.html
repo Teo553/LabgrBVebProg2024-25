@@ -1,4 +1,4 @@
-<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <title>Songs Homepage - Welcome to My Music Store</title>
@@ -26,13 +26,18 @@
         <div th:each="song : ${songsList}">
             <input type="radio" name="trackId" th:value="${song.getTrackId()}">
             <span th:text="${song.getTitle()} + ' - Genre: ' + ${song.getGenre()} + ' - Release Year: ' + ${song.getReleaseYear()} + '- Album: '+${song.getAlbum().getName()}"></span>
+            <th:block sec:authorize="hasRole('ROLE_ADMIN')">
             <a th:href="@{'songs/delete/{id}'(id=${song.getId()})}">Delete</a>
             <a th:href="@{'/songs/edit/{id}' (id=${song.getId()})}"><i>Edit</i></a>
+            </th:block>
         </div>
+
         <button type="submit">Submit Selected Song</button>
+        <th:block sec:authorize="hasAnyRole('ROLE_ADMIN')">
         <a th:href="@{/songs/add-form}">
             <h3>Add Song</h3>
         </a>
+        </th:block>
     </form>
 </main>
 </body>
